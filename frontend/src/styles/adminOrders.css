@@ -1,0 +1,101 @@
+.orders-page {
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.orders-header {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.orders-header h2 {
+  margin: 0;
+}
+
+.orders-header p {
+  margin: 5px 0 0;
+  color: gray;
+}
+
+/* CARD */
+.orders-card {
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* TABLE */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  background: #f0f4f8;
+  padding: 12px;
+  text-align: left;
+}
+
+.orders-table td {
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+.orders-table tr:hover {
+  background: #f9fbff;
+}
+
+/* STATUS BADGE */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.processing {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status.shipped {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* SELECT */
+.status-select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: gray;
+}
+
+/* ORDER ID */
+.order-id {
+  font-weight: 600;
+  color: #333;
+}

@@ -1,0 +1,131 @@
+.material-container {
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.material-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.material-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.material-header p {
+  margin: 5px 0 0;
+  color: gray;
+}
+
+/* BUTTON */
+.material-btn {
+  background: #1976d2;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.material-btn:hover {
+  background: #0d47a1;
+}
+
+/* CARD */
+.material-card {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* TABLE */
+.material-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.material-table th {
+  text-align: left;
+  padding: 14px;
+  background: #f0f4f8;
+  font-weight: 600;
+}
+
+.material-table td {
+  padding: 14px;
+  border-top: 1px solid #eee;
+}
+
+.material-table tr:hover {
+  background: #f9fbff;
+}
+
+/* PRODUCT NAME */
+.product-name {
+  font-weight: 600;
+  color: #333;
+}
+
+/* PRICE BADGE */
+.price-badge {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* CODE */
+.code {
+  color: #666;
+  font-size: 13px;
+}
+
+/* ACTIONS */
+.action-group {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn {
+  background: #ffb300;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.delete-btn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.delete-btn:hover {
+  background: #b71c1c;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: gray;
+}

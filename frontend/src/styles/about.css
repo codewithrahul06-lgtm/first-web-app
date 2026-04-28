@@ -1,0 +1,123 @@
+/* PAGE */
+.about-page {
+  background: #0b0b0f;
+  color: white;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* HERO */
+.about-hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: radial-gradient(circle at 20% 50%, #1a1a2e, transparent 40%),
+              radial-gradient(circle at 80% 50%, #ff6a00, transparent 40%);
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.about-hero p {
+  color: #aaa;
+  margin-top: 10px;
+}
+
+/* WRAPPER */
+.about-wrapper {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* GLASS CARD */
+.about-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  border-color: #ff6a00;
+}
+
+.about-card h2 {
+  margin-bottom: 10px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.stats h3 {
+  color: #ff6a00;
+  font-size: 1.5rem;
+}
+
+/* GRID */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.glass-card {
+  background: #111;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.glass-card:hover {
+  background: #1a1a1a;
+  transform: translateY(-3px);
+  border-color: #ff6a00;
+}
+
+/* SOCIAL */
+.social-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.social-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  background: #111;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* COLORS */
+.facebook:hover { border-color: #1877f2; }
+.instagram:hover { border-color: #e4405f; }
+.twitter:hover { border-color: #1da1f2; }
+.linkedin:hover { border-color: #0077b5; }

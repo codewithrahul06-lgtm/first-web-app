@@ -1,0 +1,59 @@
+/* Navbar wrapper */
+.navbar {
+  width: 100%;
+  background: #0b0b0f;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Container */
+.nav-container {
+  width: 100%;
+  padding: 0 20px;   /* control small spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+/* Logo */
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+}
+
+/* Menu */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links */
+.nav-link {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #ff6a00;
+}
+
+/* Logout button */
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.logout-btn:hover {
+  color: #ff6a00;
+}

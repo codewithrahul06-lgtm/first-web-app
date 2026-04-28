@@ -1,0 +1,116 @@
+/* PAGE */
+/* TOP ANIMATED LINE ONLY ON CARD */
+.auth-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* animated top bar inside card */
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ffb347,
+    #ff3c78,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  animation: topGlow 4s linear infinite;
+}
+
+/* animation */
+@keyframes topGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+.auth-page {
+  min-height: 100vh;
+  background: #0b0b0f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+/* CARD */
+.auth-card {
+  width: 380px;
+  background: #111;
+  padding: 30px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+
+/* TITLE */
+.auth-card h2 {
+  margin-bottom: 5px;
+}
+
+.auth-card p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #0b0b0f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: white;
+  outline: none;
+  transition: 0.3s;
+}
+
+.auth-card input:focus {
+  border-color: #ff6a00;
+}
+
+/* BUTTON */
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  background: #ff6a00;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-card button:hover {
+  background: #ff8126;
+  transform: translateY(-2px);
+}
+
+/* SWITCH LINK */
+.switch {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.switch a {
+  color: #ff6a00;
+  text-decoration: none;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}

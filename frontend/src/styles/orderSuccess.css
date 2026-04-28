@@ -1,0 +1,165 @@
+/* PAGE */
+.success-page {
+  height: 100vh;
+  background: #0b0b0f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+/* CARD */
+.success-card {
+  background: #111;
+  padding: 40px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  max-width: 400px;
+}
+
+/* CHECK ICON */
+.check-icon {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  border-radius: 50%;
+  background: #ff6a00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* TEXT */
+.success-card h1 {
+  margin-bottom: 10px;
+}
+
+.success-card p {
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.home-btn,
+.order-btn {
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* HOME */
+.home-btn {
+  background: #ff6a00;
+  color: white;
+}
+
+.home-btn:hover {
+  background: #ff8126;
+}
+
+/* ORDERS */
+.order-btn {
+  border: 1px solid #ff6a00;
+  color: #ff6a00;
+}
+
+.order-btn:hover {
+  background: #ff6a00;
+  color: white;
+}/* PAGE */
+.success-page {
+  height: 100vh;
+  background: #0b0b0f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+/* CARD */
+.success-card {
+  background: #111;
+  padding: 40px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  max-width: 400px;
+}
+
+/* CHECK ICON */
+.check-icon {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  border-radius: 50%;
+  background: #ff6a00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* TEXT */
+.success-card h1 {
+  margin-bottom: 10px;
+}
+
+.success-card p {
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.home-btn,
+.order-btn {
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* HOME */
+.home-btn {
+  background: #ff6a00;
+  color: white;
+}
+
+.home-btn:hover {
+  background: #ff8126;
+}
+
+/* ORDERS */
+.order-btn {
+  border: 1px solid #ff6a00;
+  color: #ff6a00;
+}
+
+.order-btn:hover {
+  background: #ff6a00;
+  color: white;
+}
