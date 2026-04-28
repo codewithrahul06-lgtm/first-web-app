@@ -2,10 +2,11 @@ const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
 const getRazorpayCredentials = () => {
-    const keyId = process.env.RAZORPAY_KEY_ID;
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    const keyId = process.env.RAZORPAY_KEY_ID || process.env.key_id;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET || process.env.key_secret;
 
     if (!keyId || !keySecret) {
+        console.error("Razorpay credentials not found. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env");
         return null;
     }
 

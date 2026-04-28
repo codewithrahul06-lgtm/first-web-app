@@ -27,25 +27,25 @@ const createOrder = async (req, res) => {
             <h3>Order Details:</h3>
             <ul>
                 ${items.map(item => `
-                    <li>
-                        Product ID: ${item.productId} <br/>
-                        Quantity: ${item.qty} <br/>
-                        Price: Rs. ${item.price}
-                    </li>
-                `).join("")}
+                <li>
+                    Product: ${item.name} <br/>
+                    Quantity: ${item.quantity} <br/>
+                    Price: Rs. ${item.price}
+                </li>
+            `).join("")}
             </ul>
 
             <h3>Total: Rs. ${totalAmount}</h3>
 
             <p>
                 ${address.fullname}, ${address.street}, 
-                ${address.city}, ${address.postalCode}, ${address.country}
+                ${address.city}, ${address.zip}
             </p>
         </div>
         `;
 
         await sendEmail(
-    req.body.email || req.user.email,
+    req.user.email,
     "Order Confirmation - ShopNest",
     htmlTemplate
 );
@@ -62,6 +62,7 @@ const createOrder = async (req, res) => {
         });
     }
 };
+
 const myOrders = async (req, res) => {
     try {
         const orders = await Order.find({ user: req.user._id })
