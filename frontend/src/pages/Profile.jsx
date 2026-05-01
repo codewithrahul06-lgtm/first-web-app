@@ -10,9 +10,9 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            const res = await fetch("/api/orders/my", {
+            const res = await fetch("/api/orders/", {
                 headers: {
-                    authorization: `Bearer ${user.token}`
+                    Authorization: `Bearer ${user.token}`
                 }
             });
             const data = await res.json();

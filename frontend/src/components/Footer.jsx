@@ -45,7 +45,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                <p>&copy; {new Date().getFullYear()} ShopNest. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()}  ShopNest. All rights reserved. Created BY- Web Developer - Rahul BK </p>
             </div>
         </footer>
     );

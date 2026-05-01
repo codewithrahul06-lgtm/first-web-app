@@ -25,16 +25,17 @@ import AdminProducts from "./admin/AdminProducts";
 import AdminOrders from "./admin/AdminOrders";
 import AddProduct from "./admin/AddProduct";
 import EditProduct from "./admin/EditProduct";
+
+// import ForgotPassword from "./pages/ForgotPassword";
+
 function App() {
   return (
-    
     <Router>
-     <ScrollToTop /> 
-       
+      <ScrollToTop />
+
       <Navbar />
-      
+
       <Routes>
-      
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<About />} />
@@ -45,34 +46,33 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/shipping" element={<ShippingPolicy />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/register" element={<Register />} /> 
-        <Route path="login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path= "/oder-sucess" element={<OrderSuccess />} />
+        <Route path="/OrderSuccess" element={<OrderSuccess />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/admin" element={<AdminLayout />}>
-
-        <Route path="/admin" element={<AdminDashboard />} />
-
-        <Route path="users" element={<AdminUsers />} />
-        <Route path="products" element={<AdminProducts />} />
-        <Route path="orders" element={<AdminOrders />} />
-        <Route path="products/add" element={<AddProduct />} />
-        <Route path="products/edit/:id" element={<EditProduct />} />
-      </Route>
-        <Route 
-    path="/profile" 
-    element={
-        <Profile>
-            <Profile />
-        </Profile>
-    } 
-/>
-
+          <Route path="/admin" element={<AdminDashboard />} />
+          {/* <Route path="/forgot" element={<ForgotPassword />} /> */}
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="products/add" element={<AddProduct />} />
+          <Route path="products/edit/:id" element={<EditProduct />} />
+        </Route>
+        <Route
+          path="/profile"
+          element={
+            <Profile>
+              <Profile />
+            </Profile>
+          }
+        />
       </Routes>
 
-      
       <Footer />
-      
     </Router>
   );
 }

@@ -3,42 +3,48 @@ import { AuthContext } from "../context/AuthContext";
 import "../styles/adminOrders.css";
 
 const AdminOrders = () => {
-    
   const { user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
 
-  // FETCH ORDERS
   const fetchOrders = async () => {
-    const res = await fetch("/api/orders", {
-      headers: {
-        authorization: `Bearer ${user.token}`,
-      },
-    });
+    try {
+      const res = await fetch("/api/orders/all", {
+        headers: {
+          Authorization: `Bearer ${user?.token}`, // ✅ FIXED
+        },
+      });
 
-    
-    const data = await res.json();
-    setOrders(data);
+      const data = await res.json();
+      setOrders(data);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
   };
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    if (user?.token) {
+      fetchOrders(); // ✅ wait for token
+    }
+  }, [user]);
 
-  // UPDATE STATUS
   const updateStatus = async (id, status) => {
-    const res = await fetch(`/api/orders/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify({ status }),
-    });
+    try {
+      const res = await fetch(`/api/orders/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`, // ✅ FIXED
+        },
+        body: JSON.stringify({ status }),
+      });
 
-    if (res.ok) {
-      fetchOrders();
-    } else {
-      alert("Status update failed");
+      if (res.ok) {
+        fetchOrders();
+      } else {
+        alert("Status update failed");
+      }
+    } catch (err) {
+      console.error("Update error:", err);
     }
   };
 
@@ -51,7 +57,6 @@ const AdminOrders = () => {
       </div>
 
       <div className="orders-card">
-
         <table className="orders-table">
           <thead>
             <tr>
@@ -68,13 +73,13 @@ const AdminOrders = () => {
               orders.map((o) => (
                 <tr key={o._id}>
 
-                  <td className="order-id">
+                  <td>
                     #{o._id.slice(-6).toUpperCase()}
                   </td>
 
                   <td>{o.user?.name || "User"}</td>
 
-                  <td>${o.totalPrice}</td>
+                  <td>Rs. {o.totalAmount}</td> {/* ✅ FIXED */}
 
                   <td>
                     <span className={`status ${o.status}`}>
@@ -88,10 +93,8 @@ const AdminOrders = () => {
                       onChange={(e) =>
                         updateStatus(o._id, e.target.value)
                       }
-                      className="status-select"
                     >
                       <option value="pending">Pending</option>
-                      <option value="processing">Processing</option>
                       <option value="shipped">Shipped</option>
                       <option value="delivered">Delivered</option>
                     </select>
@@ -101,15 +104,12 @@ const AdminOrders = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="empty">
-                  No orders found
-                </td>
+                <td colSpan="5">No orders found</td>
               </tr>
             )}
           </tbody>
 
         </table>
-
       </div>
     </div>
   );

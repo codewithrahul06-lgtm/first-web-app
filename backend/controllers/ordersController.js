@@ -1,5 +1,5 @@
 const Order = require('../model/order.js');
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../utils/sendEmail.js");
 
 const createOrder = async (req, res) => {
     try {

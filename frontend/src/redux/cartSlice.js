@@ -10,10 +10,14 @@ const saveToLocalStorage = (items) => {
     localStorage.setItem("cartItems", JSON.stringify(items));
 };
 
+
 const cartSlice = createSlice({
     name: "cart",
     initialState,
-    reducers: {
+    reducers: {clearCart: (state) => {
+    state.items = [];
+    saveToLocalStorage(state.items);
+},
 
         addToCart: (state, action) => {
             const item = action.payload;

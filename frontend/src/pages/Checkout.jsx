@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { clearCart } from "../redux/cartSlice";
 import { AuthContext } from "../context/AuthContext";
 import "../styles/checkout.css";
+import { toast } from 'react-toastify'; 
 
 const Checkout = () => {
     const { user } = useContext(AuthContext);
@@ -46,7 +47,7 @@ const Checkout = () => {
 
     const bypassPayment = async () => {
         if (!user || !user.token) {
-            alert("Please login first");
+            toast.error("Please login first");
             return;
         }
         const saveOrderRes = await fetch("/api/orders", {
@@ -55,31 +56,41 @@ const Checkout = () => {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${user.token}`
             },
-            body: JSON.stringify({
-                items: cartItems,
-                totalAmount: totalPrice,
-                address,
-                paymentId: "bypass_" + Date.now()
-            })
+           body: JSON.stringify({
+    items: cartItems.map(item => ({
+        productId: item._id,
+        qty: item.quantity, // ✅ FIXED
+        price: item.price
+    })),
+    totalAmount: totalPrice,
+    address: {
+        fullname: address.fullname,
+        street: address.street,
+        city: address.city,
+        postalCode: address.zip, // ✅ FIXED
+        country: "Nepal" // ✅ REQUIRED
+    },
+    paymentId   : "COD" // ✅ INDICATES CASH ON DELIVERY
+})
         });
 
         if (saveOrderRes.ok) {
             dispatch(clearCart());
             navigate("/order-success");
         } else {
-            alert("Order failed");
+            toast.error("Order failed");
         }
     };
 
   const handlePayment = async () => {
     if (!user || !user.token) {
-        alert("Please login first");
+        toast.error("Please login first");
         navigate("/login");
         return;
     }
 
     if (!address.fullname || !address.phone || !address.street) {
-        alert("Fill all fields");
+        toast.error("Fill all fields");
         return;
     }
 
@@ -121,18 +132,28 @@ const Checkout = () => {
                             "Content-Type": "application/json",
                             authorization: `Bearer ${user.token}`
                         },
-                        body: JSON.stringify({
-                            items: cartItems,
-                            totalAmount: totalPrice,
-                            address,
-                            paymentId: response.razorpay_payment_id
-                        })
+                         body: JSON.stringify({
+    items: cartItems.map(item => ({
+        productId: item._id,
+        qty: item.quantity, // ✅ FIXED
+        price: item.price
+    })),
+    totalAmount: totalPrice,
+    address: {
+        fullname: address.fullname,
+        street: address.street,
+        city: address.city,
+        postalCode: address.zip, // ✅ FIXED
+        country: "Nepal" // ✅ REQUIRED
+    },
+    paymentId  : response.razorpay_payment_id // ✅ STORE PAYMENT ID
+})
                     });
 
                     dispatch(clearCart());
-                    navigate("/order-success");
+                    navigate("/OrderSuccess");
                 } else {
-                    alert("Payment verification failed");
+                    toast.error("Payment verification failed");
                 }
             }
         };
@@ -142,7 +163,7 @@ const Checkout = () => {
 
     } catch (err) {
         console.error(err);
-        alert("Payment error");
+            toast.error("Payment error");
     }
 };
     return (

@@ -1,7 +1,7 @@
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const sendEmail = require("../utils/SENDemAIL.JS");
+const sendEmail = require("../utils/sendEmail.js");
 
 const generateToken = (id) =>
     jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -34,12 +34,24 @@ const registerUser = async (req, res) => {
             message
         );
 
+        const token = generateToken(user._id);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+
         return res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            token: generateToken(user._id),
+            message: "Account created successfully",
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            }
         });
     } catch (error) {
         return res.status(500).json({ message: "Server error" });
@@ -69,7 +81,7 @@ const loginUser = async (req, res) => {
             httpOnly: true,        // 🔒 cannot access via JS
             secure: false,         // true in production (HTTPS)
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+            maxAge: 1 * 60 * 1000 // 1 minutes
         });
 
         return res.status(200).json({

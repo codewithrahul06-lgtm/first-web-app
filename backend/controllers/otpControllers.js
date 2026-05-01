@@ -1,98 +1,177 @@
+const User = require("../model/user");
+const Otp = require("../model/otp");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail.js");
 
-// temporary storage (use DB in production)
-const otpStore = new Map();
+const generateToken = (id) =>
+    jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-// Generate OTP
-const generateOTP = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-};
-
-// Send OTP
-const sendOtp = async (req, res) => {
+// ================= SEND OTP (Registration) =================
+exports.sendOtp = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { name, email, password } = req.body;
 
-        if (!email) {
-            return res.status(400).json({ message: "Email is required" });
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
         }
 
-        const otp = generateOTP();
+        // 🔢 Generate OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        otpStore.set(email, {
-            otp,
-            expires: Date.now() + 5 * 60 * 1000, // 5 min
+        // ⏳ Expiry (5 min)
+        const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+        // ❌ Delete old OTP
+        await Otp.deleteMany({ email });
+
+        // 💾 Save new OTP with user data
+        await Otp.create({ 
+            email, 
+            otp, 
+            expiresAt,
+            name,
+            password 
         });
 
-        const htmlTemplate = `
-        <div style="font-family: Arial, sans-serif; background:#f4f4f4; padding:20px;">
-            <div style="max-width:500px; margin:auto; background:white; padding:30px; border-radius:10px; text-align:center;">
-                
-                <h2 style="color:#333;">OTP Verification</h2>
-                
-                <p style="color:#555; font-size:16px;">
-                    Use the OTP below to complete your verification process:
-                </p>
-
-                <div style="font-size:30px; font-weight:bold; letter-spacing:5px; margin:20px 0; color:#2c7be5;">
-                    ${otp}
-                </div>
-
-                <p style="color:#888; font-size:14px;">
-                    This OTP is valid for 5 minutes.
-                </p>
-
-                <hr style="margin:20px 0;" />
-
-                <p style="font-size:12px; color:#aaa;">
-                    If you didn’t request this, you can ignore this email.
-                </p>
-
-            </div>
-        </div>
-        `;
-
+        // 📩 Send Email
+        const message = `Your ShopNest registration OTP is: ${otp}. This OTP is valid for 5 minutes.`;
         await sendEmail(
             email,
-            "Your OTP Code",
-            htmlTemplate  
+            "ShopNest - Registration OTP",
+            message
         );
 
-        res.status(200).json({ message: "OTP sent successfully" });
+        res.status(200).json({ message: "OTP sent to email" });
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Failed to send OTP" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-// Verify OTP
-const verifyOtp = (req, res) => {
+// ================= VERIFY OTP (Registration) =================
+exports.verifyOtp = async (req, res) => {
     try {
         const { email, otp } = req.body;
 
-        const record = otpStore.get(email);
+        const record = await Otp.findOne({ email, otp });
 
         if (!record) {
-            return res.status(400).json({ message: "OTP not found" });
-        }
-
-        if (Date.now() > record.expires) {
-            otpStore.delete(email);
-            return res.status(400).json({ message: "OTP expired" });
-        }
-
-        if (record.otp !== otp) {
             return res.status(400).json({ message: "Invalid OTP" });
         }
 
-        otpStore.delete(email);
+        // ⏳ Check expiry
+        if (record.expiresAt < new Date()) {
+            return res.status(400).json({ message: "OTP expired" });
+        }
 
-        return res.status(200).json({ message: "OTP verified successfully" });
+        // 🔐 Hash password
+        const hashedPassword = await bcrypt.hash(record.password, 10);
 
-    } catch (error) {
-        return res.status(500).json({ message: "Server error" });
+        // 👤 Create user
+        const user = await User.create({
+            name: record.name,
+            email: record.email,
+            password: hashedPassword
+        });
+
+        // ❌ Delete OTP after use
+        await Otp.deleteMany({ email });
+
+        // Generate token
+        const token = generateToken(user._id);
+
+        // Return user data (without password)
+        res.status(201).json({
+            message: "Account created successfully",
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-module.exports = { sendOtp, verifyOtp };
+// ================= FORGOT PASSWORD =================
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // 🔢 Generate OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        // ⏳ Expiry (5 min)
+        const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+        // ❌ Delete old OTP
+        await Otp.deleteMany({ email });
+
+        // 💾 Save new OTP
+        await Otp.create({ email, otp, expiresAt });
+
+        // 📩 Send Email
+        const message = `Your password reset OTP is: ${otp}. This OTP is valid for 5 minutes.`;
+        await sendEmail(
+            email,
+            "ShopNest - Password Reset OTP",
+            message
+        );
+
+        res.status(200).json({ message: "OTP sent to email" });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// ================= RESET PASSWORD =================
+exports.resetPassword = async (req, res) => {
+    try {
+        const { email, otp, newPassword } = req.body;
+
+        const record = await Otp.findOne({ email, otp });
+
+        if (!record) {
+            return res.status(400).json({ message: "Invalid OTP" });
+        }
+
+        // ⏳ Check expiry
+        if (record.expiresAt < new Date()) {
+            return res.status(400).json({ message: "OTP expired" });
+        }
+
+        // 🔐 Hash password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // 🔄 Update user password
+        await User.findOneAndUpdate(
+            { email },
+            { password: hashedPassword }
+        );
+
+        // ❌ Delete OTP after use
+        await Otp.deleteMany({ email });
+
+        res.status(200).json({ message: "Password reset successful" });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+    }
+};

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 
 const Navbar = () => {
-    const { user, logout, cart } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const cartItems = useSelector((state) => state.cart.items);
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const Navbar = () => {
 
                     <li>
                         <Link to="/cart" className="nav-link">
-                            Cart 🛒 ({cart.length})
+                            Cart 🛒 ({cartItems.length})
                         </Link>
                     </li>
 

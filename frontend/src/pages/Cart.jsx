@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart, updateQuantity } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
 import "../styles/cart.css";
 
 const Cart = () => {
-    const { cart, removeFromCart, updateCartItem } = useContext(AuthContext);
+    const cartItems = useSelector((state) => state.cart.items);
+    const dispatch = useDispatch();
 
-    const total = cart.reduce(
+    const total = cartItems.reduce(
         (acc, item) => acc + (item.price || 0) * (item.quantity || 0),
         0
     );
@@ -15,18 +17,19 @@ const Cart = () => {
         const newQty = (item.quantity || 1) + delta;
 
         if (newQty < 1) {
-            removeFromCart(item._id);
+            dispatch(removeFromCart(item._id));
         } else {
-            updateCartItem(item._id, newQty);
+            dispatch(updateQuantity({ itemId: item._id, quantity: newQty }));
         }
     };
 
     return (
         <div className="cart-container">
+          
 
             <h2 className="cart-title">Your Cart 🛒</h2>
 
-            {cart.length === 0 ? (
+            {cartItems.length === 0 ? (
                 <p className="empty-cart">
                     Your cart is empty. Start shopping!
                 </p>
@@ -36,7 +39,7 @@ const Cart = () => {
                     {/* LEFT */}
                     <div className="cart-items">
 
-                        {cart.map(item => (
+                        {cartItems.map(item => (
                             <div key={item._id} className="cart-item">
 
                                 <img
@@ -74,7 +77,7 @@ const Cart = () => {
                                     <button
                                         className="remove-btn"
                                         onClick={() =>
-                                            removeFromCart(item._id)
+                                            dispatch(removeFromCart(item._id))
                                         }
                                     >
                                         Remove
@@ -99,7 +102,7 @@ const Cart = () => {
 
                         <h3>Order Summary</h3>
 
-                        <p>Total Items: {cart.length}</p>
+                        <p>Total Items: {cartItems.length}</p>
 
                         <p className="total-price">
                             Total: ${total.toFixed(2)}

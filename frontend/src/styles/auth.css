@@ -5,6 +5,15 @@
   overflow: hidden;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button::after {
+  content: "";
+}
+
 /* animated top bar inside card */
 .auth-card::before {
   content: "";

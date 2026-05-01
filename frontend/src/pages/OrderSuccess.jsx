@@ -3,35 +3,29 @@ import { Link } from "react-router-dom";
 import "../styles/orderSuccess.css";
 
 const OrderSuccess = () => {
-    return (
-        <div className="success-page">
+  return (
+    <div className="success-page">
+      <div className="success-card">
+        <div className="check-icon">✔</div>
 
-            <div className="success-card">
+        <h1>Order Placed Successfully!</h1>
 
-                <div className="check-icon">✔</div>
+        <p>Thank you for shopping with ShopNest 🛍️</p>
 
-                <h1>Order Placed Successfully!</h1>
+        <p>Your order has been confirmed and will be shipped soon.</p>
 
-                <p>Thank you for shopping with ShopNest 🛍️</p>
+        <div className="buttons">
+          <Link to="/" className="home-btn">
+            Continue Shopping
+          </Link>
 
-                <p>Your order has been confirmed and will be shipped soon.</p>
-
-                <div className="buttons">
-
-                    <Link to="/" className="home-btn">
-                        Continue Shopping
-                    </Link>
-
-                    <Link to="/orders" className="order-btn">
-                        View Orders
-                    </Link>
-
-                </div>
-
-            </div>
-
+          <Link to="/orders" className="order-btn">
+            View Orders
+          </Link>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default OrderSuccess;

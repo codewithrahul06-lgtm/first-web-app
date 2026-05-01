@@ -102,3 +102,27 @@
   padding: 50px;
   color: #aaa;
 }
+.chat-form {
+  background: #0b3c74;
+  padding: 25px;
+  border-radius: 12px;
+  width: 300px;
+  color: white;
+}
+
+.chat-form input,
+.chat-form textarea {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.chat-form button {
+  width: 100%;
+  padding: 10px;
+  background: #1a5edb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
